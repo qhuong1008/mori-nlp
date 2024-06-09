@@ -1,2 +1,6 @@
-# mori-nlp
-Functional Python code for both the recommendation system and comment classification system.
+Prerequisites:
+
+Python 3.11
+
+Install dependencies:
+pip install -r requirements.txt
