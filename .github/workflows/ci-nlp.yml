@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - lien
-  pull_request:
-    branches: 
-      - main
 jobs:
   ci-nlp:
     runs-on: ubuntu-latest
