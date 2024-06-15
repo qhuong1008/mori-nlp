@@ -71,21 +71,34 @@ class RecommendationCFController:
     
     def recommend_books_item(self, user_id, n=5):
         user_ratings = self.user_book_matrix.loc[user_id]
-        similar_books = pd.Series(dtype='float64')
+        
+        # Khởi tạo danh sách để lưu trữ các series tương tự
+        similar_books_list = []
+        
+        # Lặp qua các sách đã được đánh giá bởi người dùng và nhân với hệ số tương tự
         for book_id, rating in user_ratings[user_ratings > 0].items():
-            similar_books = similar_books.append(self.book_similarity_df[book_id] * rating)
-        similar_books = similar_books.groupby(similar_books.index).sum()
-        similar_books = similar_books[~similar_books.index.isin(user_ratings[user_ratings > 0].index)]
-        return similar_books.sort_values(ascending=False).head(n)
+            similar_books_list.append(self.book_similarity_df[book_id] * rating)
+        
+        # Sử dụng pd.concat để kết hợp các series trong danh sách
+        if similar_books_list:
+            similar_books = pd.concat(similar_books_list)
+            similar_books = similar_books.groupby(similar_books.index).sum()
+            similar_books = similar_books[~similar_books.index.isin(user_ratings[user_ratings > 0].index)]
+            return similar_books.sort_values(ascending=False).head(n)
+        else:
+            return pd.Series(dtype='float64')  # Trả về một series rỗng nếu không có sách tương tự
     
     def recommend_books_based_on_history(self, user_history: dict, n: int):
         user_read_books = user_history
         print("user history",user_read_books)
         if not user_read_books:
             return []
-        similar_books = pd.Series(dtype='float64')
+        
+        similar_books_list = []
         for book_id in user_read_books:
-            similar_books = similar_books.append(self.book_similarity_df[book_id])
+            similar_books_list.append(self.book_similarity_df[book_id])
+        
+        similar_books = pd.concat(similar_books_list)
         similar_books = similar_books.groupby(similar_books.index).sum()
         similar_books = similar_books[~similar_books.index.isin(user_read_books)]
 
