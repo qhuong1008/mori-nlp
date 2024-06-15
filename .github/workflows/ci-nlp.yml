@@ -1,0 +1,21 @@
+name: CI - nlp
+on:
+  push:
+    branches:
+      - lien
+  pull_request:
+    branches: 
+      - main
+jobs:
+  ci-nlp:
+    runs-on: ubuntu-latest
+    container:
+      image: docker:dind
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login docker
+        run: docker login -u nguyenlien -p C!gtnH7yWyM24uX
+      - name: Build nlp
+        run: docker build -t nguyenlien/mori-nlp .
+      - name: Push image
+        run: docker push nguyenlien/mori-nlp
