@@ -23,9 +23,6 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies (use apk for Alpine)
-        run: |
-          docker run --rm python:{{ matrix.python-version }}-alpine apk update && apk add python3-dev
       - name: Login to Docker Hub
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }} # Use secrets for credentials
