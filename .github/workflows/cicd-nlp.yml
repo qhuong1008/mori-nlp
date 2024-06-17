@@ -5,9 +5,9 @@ name: mori nlp deployment
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build-and-push:
@@ -15,28 +15,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.11"]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Login to Docker Hub
-      env:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Login to Docker Hub
+        env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }} # Use secrets for credentials
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
-      run: |
+        run: |
           docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
 
-    - name: Build and push Docker image
-      env:
+      - name: Build and push Docker image
+        env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }} # Use secrets for credentials
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
           DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
-      run: |
+        run: |
           docker build -t nlp .
           docker tag nlp "$DOCKER_IMAGE"
           docker push "$DOCKER_IMAGE"
@@ -70,4 +70,3 @@ jobs:
           EOF
           chmod +x deploy.sh
           ssh $REMOTE_SERVER -p $REMOTE_PORT < deploy.sh
- 
