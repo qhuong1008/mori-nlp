@@ -4,14 +4,13 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install -r requirements.txt
-
-
 FROM alpine
 
 WORKDIR /app
 
 COPY --from=builder /app/ .
+
+RUN pip install -r requirements.txt
 
 EXPOSE 8000
 
