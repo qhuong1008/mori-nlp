@@ -1,5 +1,5 @@
 # Stage 1: Build dependencies
-FROM python:3.9-alpine AS builder
+FROM python:3.9 AS builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ RUN python -m venv /venv
 RUN /venv/bin/pip install -r requirements.txt
 
 # Stage 2: Create final image with application
-FROM python:3.9-alpine
+FROM alpine
 
 COPY --from=builder /venv/ /venv/
 
