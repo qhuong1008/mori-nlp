@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN sudo apt install python3-venv -y
+RUN apt install python3-venv -y
 
 RUN python3 -m venv pytorch_env
 
