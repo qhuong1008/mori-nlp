@@ -13,6 +13,8 @@ RUN /venv/bin/pip install -r requirements.txt
 # Stage 2: Second builder for small iamge size
 FROM alpine AS builder2
 
+WORKDIR /app
+
 COPY --from=builder /venv/ /venv/
 
 # Stage 3: Production stage (minimal image size reduce stage)
