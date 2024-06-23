@@ -1,9 +1,9 @@
+torch
 fastapi
 redis
 types-redis
 uvicorn
 transformers 
-torch
 pymongo
 numpy
 sentence-transformers
