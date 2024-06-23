@@ -12,6 +12,6 @@ FROM alpine
 
 WORKDIR /app
 
-COPY --from=builder /app /app
+COPY --from=builder . .
 
 ENTRYPOINT ["uvicorn", "main:app", "--reload"]
