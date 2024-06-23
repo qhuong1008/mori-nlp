@@ -1,5 +1,5 @@
 # Stage 1: Build dependencies
-FROM python:3.11-alpine AS builder
+FROM python:3.7-alpine AS builder
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ COPY . .
 RUN pip install -r requirements.txt
 
 # Stage 2: Create final image with application
-FROM python:3.11-alpine
+FROM python:3.7-alpine
 
 WORKDIR /app
 
