@@ -1,9 +1,7 @@
 torch
 numpy
-fastapi
 redis
 types-redis
-uvicorn
 transformers 
 pymongo
 sentence-transformers

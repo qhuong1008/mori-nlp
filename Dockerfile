@@ -7,6 +7,8 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
+RUN pip install -r fastapi uvicorn
+
 # Stage 2: Create final image with application
 FROM alpine
 
