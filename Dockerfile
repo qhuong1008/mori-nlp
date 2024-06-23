@@ -5,6 +5,12 @@ WORKDIR /app
 
 COPY . .
 
+RUN sudo apt install python3-venv -y
+
+RUN python3 -m venv pytorch_env
+
+RUN source pytorch_env/bin/activate
+
 RUN pip install -r requirements.txt
 
 # Stage 2: Create final image with application
