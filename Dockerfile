@@ -7,7 +7,7 @@ COPY requirements.txt .
 
 RUN apk add --no-cache --virtual .build-deps build-base python3 py3-pip
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Stage 2: Create final image with application
 FROM alpine:latest
