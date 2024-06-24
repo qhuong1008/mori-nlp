@@ -1,23 +1,11 @@
-# Stage 1: Build dependencies
-FROM python:3.9 AS builder
+FROM python:3.11
 
 WORKDIR /app
 
 COPY . .
 
-# Create a virtual environment that can be copied into the next stage
-RUN python -m venv /venv
+RUN pip install -r requirements.txt
 
-RUN /venv/bin/pip install -r requirements.txt
-
-# Stage 2: Second builder for small iamge size
-FROM alpine
-
-WORKDIR /app
-
-COPY --from=builder /venv/ /venv/
-
-# Set environment variable for virtual environment path
-ENV PATH=/venv/bin:$PATH
+EXPOSE 8000
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
